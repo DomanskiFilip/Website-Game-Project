@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>login</title>
-    <script type="module" src="login.js" defer></script>
+    <script src="login.js" defer></script>
 </head>
 <body>
     <nav>
@@ -15,15 +15,18 @@
             <li><a href="login.html">login</a></li>
         </ul>
     </nav>
-    <section id="login">
-        <h1>Login</h1>
+    <section id="register">
+        <h1>Register</h1>
         <form action="" id="loginForm">
             <label for="username">Username</label>
             <input type="text" name="username" id="username" required>
             <label for="password">Password</label>
             <input type="password" name="password" id="password" required>
-            <button type="submit" id="loginButton">Login</button>
-            <a href="newUser.html" id="newUserButton">New User</a>
+            <label for="phone">Phone Number</label>
+            <input type="text" name="phone" id="phone" required>
+            <label for="birthDate">Birth Date</label>
+            <input type="date" name="birthDate" id="birthDate" required>
+            <button type="submit" id="registerButton">Register</button>
         </form>
 
 </body>

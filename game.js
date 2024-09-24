@@ -1,6 +1,6 @@
  // Attributes of the player
  var player = {
-    x: 700,
+    x: 650,
     y: 200,
     x_v: 0,
     y_v: 0,
@@ -37,7 +37,7 @@ const PLATFORM_HEIGHT = 15;
 
 // Define platform positions
 const predefinedPlatforms = [
-    { x: playerStartX - PLATFORM_WIDTH / 2, y: playerStartY + 20 }, // Platform directly under the player
+    { x: 650, y: 200 },
     { x: 600, y: 300 },
     { x: 800, y: 400 },
     { x: 850, y: 200 },
@@ -48,12 +48,30 @@ const predefinedPlatforms = [
     { x: 960, y: 380 },
 ];
 
+// Calculate the total width of the platforms group
+const minX = Math.min(...predefinedPlatforms.map(p => p.x));
+const maxX = Math.max(...predefinedPlatforms.map(p => p.x)) + PLATFORM_WIDTH;
+const totalWidth = maxX - minX;
+
+// Calculate the total height of the platforms group
+const minY = Math.min(...predefinedPlatforms.map(p => p.y));
+const maxY = Math.max(...predefinedPlatforms.map(p => p.y)) + PLATFORM_HEIGHT;
+const totalHeight = maxY - minY;
+
+// Calculate the center of the canvas
+const centerX = canvasWidth / 2;
+const centerY = canvasHeight / 2;
+
+// Calculate the starting x, y positions for the first platform to center the group
+const offsetX = centerX - (totalWidth / 2);
+const offsetY = centerY - (totalHeight / 2);
+
 // Function to create platforms with predefined positions
 function createplat() {
     for (let i = 0; i < predefinedPlatforms.length; i++) {
         platforms.push({
-            x: predefinedPlatforms[i].x,
-            y: predefinedPlatforms[i].y,
+            x: predefinedPlatforms[i].x - minX + offsetX,
+            y: predefinedPlatforms[i].y - minY + offsetY,
             width: PLATFORM_WIDTH,
             height: PLATFORM_HEIGHT,
             color: PLATFORM_COLOR
@@ -72,22 +90,22 @@ const COIN_HEIGHT = 10;
 
 // Define coin positions
 const predefinedCoins = [
-    { x: 600, y: 280 },
-    { x: 800, y: 380 },
-    { x: 850, y: 180 },
-    { x: 1000, y: 180 },
-    { x: 1200, y: 80 },
-    { x: 1300, y: 280 },
-    { x: 1100, y: 330 },
-    { x: 960, y: 360 },
+    { x: 650, y: 280 },
+    { x: 850, y: 380 },
+    { x: 900, y: 180 },
+    { x: 1050, y: 180 },
+    { x: 1250, y: 80 },
+    { x: 1350, y: 280 },
+    { x: 1150, y: 330 },
+    { x: 1010, y: 360 },
 ];
 
-// Function to create coins with predefined positions
+// Create coins
 function createcoins() {
     for (let i = 0; i < predefinedCoins.length; i++) {
         coins.push({
-            x: predefinedCoins[i].x,
-            y: predefinedCoins[i].y,
+            x: predefinedCoins[i].x - minX + offsetX,
+            y: predefinedCoins[i].y - minY + offsetY,
             width: COIN_WIDTH,
             height: COIN_HEIGHT,
             color: COIN_COLOR
@@ -131,7 +149,9 @@ function rendercoins() {
 function renderCoinCounter() {
     ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
     ctx.font = "1000px Arial";
-    ctx.fillText(coinCounter, 700, 800);
+    const text = coinCounter.toString();
+    const textWidth = ctx.measureText(text).width; 
+    ctx.fillText(text, (canvasWidth / 2) - (textWidth / 2), 800); // Centered horizontally and vertically
 }
 
 
@@ -166,6 +186,7 @@ function keyup(e) {
     }
 }
 
+let score = 0; // Variable to store the player's score
 let gameEnded = false; // Flag to check if the game has ended
 
 function renderVictoryMessage() {
@@ -174,11 +195,20 @@ function renderVictoryMessage() {
     ctx.font = "40px Arial";
     ctx.fillText("Victory!", canvas.width / 2 - 80, canvas.height / 2 - 20);
     ctx.font = "20px Arial";
-    ctx.fillText("your score: " + coinCounter, canvas.width / 2 - 70, canvas.height / 2 + 20);
+    score = Math.floor(((coinCounter / elapsedTime) * 1000000));
+    ctx.fillText("your score: " + score, canvas.width / 2 - 70, canvas.height / 2 + 20);
+    return score;
+}
+
+function startGame() {
+    startTime = Date.now();
+    gameEnded = false;
+    // Other initialization code
 }
 
 function loop() {
     if (gameEnded) {
+        elapsedTime = ((Date.now() - startTime) / 1000); // Calculate elapsed time in seconds
         renderVictoryMessage();
         return; // Stop the game loop
     }
@@ -270,4 +300,6 @@ createplat();
 createcoins();
 document.addEventListener("keydown", keydown);
 document.addEventListener("keyup", keyup);
+startGame();
 loop();
+export {score};
