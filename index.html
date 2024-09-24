@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Web Game by Filip Domanski</title>
-    <script type="module" src="game.js" defer></script>
-    <script type="module" src="leaderboard.js"></script>
+    <script src="game.js" defer></script>
 </head>
     <nav>
         <ul>
@@ -15,7 +14,19 @@
             <li><a href="login.html">login</a></li>
         </ul>
     </nav>
-    <canvas id="canvas"></canvas>
+    <main>
+       <section id="login">
+            <h1>Login</h1>
+            <form action="" id="loginForm">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+                <button id="loginButton" onclick="startButton()">Login</button>
+            </form>
+        </section>
+        <canvas id="canvas"></canvas>
+    </main>
 <body>
 </body>
 </html>

@@ -1,3 +1,5 @@
+
+ // game
  // Attributes of the player
  var player = {
     x: 650,
@@ -203,7 +205,6 @@ function renderVictoryMessage() {
 function startGame() {
     startTime = Date.now();
     gameEnded = false;
-    // Other initialization code
 }
 
 function loop() {
@@ -296,10 +297,24 @@ document.getElementById("canvas");
 ctx = canvas.getContext("2d");
 ctx.canvas.height = window.innerHeight - document.getElementsByTagName("nav")[0].clientHeight;
 ctx.canvas.width = window.innerWidth;
-createplat();
-createcoins();
 document.addEventListener("keydown", keydown);
 document.addEventListener("keyup", keyup);
-startGame();
-loop();
-export {score};
+
+
+ // login
+ function startButton() {
+    document.getElementById("login").display = none;
+    document.getElementById("loginButton").diplay = block;
+    createplat();
+    createcoins();
+    startGame();
+    loop();
+ }
+
+
+
+ 
+
+
+// leaderboard
+
