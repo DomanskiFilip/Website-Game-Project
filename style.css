@@ -130,3 +130,8 @@ section {
         section form a:hover {
             background-color: #2a44d7;
         }
+
+#loginError {
+    color: red;
+    margin: 10px 0;
+}

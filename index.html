@@ -7,6 +7,8 @@
     <title>Web Game by Filip Domanski</title>
     <script src="game.js" defer></script>
 </head>
+<body>
+    <!--navigation-->
     <nav>
         <ul>
             <li><a href="index.html">Game</a></li>
@@ -15,16 +17,19 @@
         </ul>
     </nav>
     <main>
+        <!--login section-->
        <section id="login">
             <h1>Login</h1>
-            <form action="" id="loginForm">
+            <form id="loginForm">
                 <label for="username">Username</label>
-                <input type="text" name="username" id="username">
+                <input type="text" name="username" id="username" required>
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password">
-                <button id="loginButton" onclick="startButton()">Login</button>
+                <input type="password" name="password" id="password" required>
+                <span id="loginError"></span>
+                <button id="startButton">Login</button>
             </form>
         </section>
+        <!--game canvas-->
         <canvas id="canvas"></canvas>
     </main>
 <body>

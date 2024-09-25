@@ -1,7 +1,6 @@
-
- // game
- // Attributes of the player
- var player = {
+// INITIAL DECLARATIONS SECTION
+// Attributes of the player
+var player = {
     x: 650,
     y: 200,
     x_v: 0,
@@ -9,7 +8,7 @@
     jump : true,
     height: 20,
     width: 20
-    };
+};
 
 var keys = {
     right: false,
@@ -23,6 +22,12 @@ const playerStartY = player.y;
 
 // gravity 
 var gravity = 0.6;
+
+// canvas
+document.getElementById("canvas");
+ctx = canvas.getContext("2d");
+ctx.canvas.height = window.innerHeight - document.getElementsByTagName("nav")[0].clientHeight;
+ctx.canvas.width = window.innerWidth;
 
 //canvas size initially set to screen resolution - the nav bar height
 var navHeight = document.getElementsByTagName("nav")[0].clientHeight;
@@ -70,6 +75,7 @@ const offsetY = centerY - (totalHeight / 2);
 
 // Function to create platforms with predefined positions
 function createplat() {
+    console.log("Platforms created");
     for (let i = 0; i < predefinedPlatforms.length; i++) {
         platforms.push({
             x: predefinedPlatforms[i].x - minX + offsetX,
@@ -104,6 +110,7 @@ const predefinedCoins = [
 
 // Create coins
 function createcoins() {
+    console.log("Coins created");
     for (let i = 0; i < predefinedCoins.length; i++) {
         coins.push({
             x: predefinedCoins[i].x - minX + offsetX,
@@ -158,6 +165,9 @@ function renderCoinCounter() {
 
 
 // MOVEMENT SECTION
+// Event listeners for keydown and keyup events
+document.addEventListener("keydown", keydown);
+document.addEventListener("keyup", keyup);
 
 function keydown(e) {
     if (e.keyCode == 37) {
@@ -188,6 +198,8 @@ function keyup(e) {
     }
 }
 
+
+// GAME SECTION
 let score = 0; // Variable to store the player's score
 let gameEnded = false; // Flag to check if the game has ended
 
@@ -203,11 +215,13 @@ function renderVictoryMessage() {
 }
 
 function startGame() {
+    console.log("Game started");
     startTime = Date.now();
     gameEnded = false;
 }
 
 function loop() {
+    console.log("Game loop running");
     if (gameEnded) {
         elapsedTime = ((Date.now() - startTime) / 1000); // Calculate elapsed time in seconds
         renderVictoryMessage();
@@ -292,29 +306,53 @@ function loop() {
     requestAnimationFrame(loop);
 }
 
-// Initialize the game
-document.getElementById("canvas");
-ctx = canvas.getContext("2d");
-ctx.canvas.height = window.innerHeight - document.getElementsByTagName("nav")[0].clientHeight;
-ctx.canvas.width = window.innerWidth;
-document.addEventListener("keydown", keydown);
-document.addEventListener("keyup", keyup);
 
 
- // login
- function startButton() {
-    document.getElementById("login").display = none;
-    document.getElementById("loginButton").diplay = block;
+
+ // LOGIN SECTION
+
+ //login button starting the game
+ function startButton(event) {
+    event.preventDefault(); // preventing form element to cause unexpected behaviour by preventing event default behaviour
+    console.log("Start button clicked");   
+
+    // username and password requirements
+    loginError = document.getElementById("loginError");
+    if (document.getElementById("username").value === "") {
+        loginError.innerHTML = "Please enter your username";
+        return;
+    }
+
+    if (document.getElementById("password").value === "") {
+        loginError.innerHTML = "Please enter your password";
+        return;
+    }
+
+
+
+    //hide login and show game canvas
+    document.getElementById("login").style.display = "none";
+    const canvasElement = document.getElementById("canvas");
+    if (canvasElement) {
+        canvasElement.style.display = "block";
+        console.log("Canvas displayed");
+    } else {
+        console.error("Canvas element not found");
+    }
+    //initialize game
     createplat();
     createcoins();
+    // start game
     startGame();
     loop();
  }
 
-
+ document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("startButton").addEventListener("click", startButton);
+});
 
  
 
 
-// leaderboard
+// LEADERBOARD SECTION
 
