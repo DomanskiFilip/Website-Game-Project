@@ -47,12 +47,12 @@ main {
     align-items: center;
 }
 
-/* game */
+/* GAME CSS */
 canvas {
     display: none;
 }
 
-/* login/newUser page css */
+/* LOGIN/REGISTER PAGE CSS */
 
 section {
     display: flex;
@@ -131,7 +131,64 @@ section {
             background-color: #2a44d7;
         }
 
-#loginError {
+span {
     color: red;
     margin: 10px 0;
 }
+
+/* LEADERBOARD CSS */
+
+#leaderBoard {
+    width: 60%;
+    height: 80%;
+    background-color: #2a44d7;
+    overflow-y: scroll;
+    justify-content: flex-start;
+        &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(83, 83, 83, 0.07);
+        background-color: #2a44d7;
+        }
+        &::-webkit-scrollbar {
+        width: 7px;
+        background-color: #2a44d7;
+        }
+        &::-webkit-scrollbar-thumb {
+        background-color: #cbda2a;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background-color: #daec18;
+            }
+}
+    #leaderBoard table{
+        width: 100%;
+        height: 100%;
+        color: white;
+    }
+
+    #leaderBoard table thead, tbody {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    #leaderBoard table th, td, tr {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: stretch;
+        padding: 3px 0;
+    }
+
+        #leaderBoard table tbody {
+            width: 100%;
+            flex-direction: column;
+        }
+            #leaderBoard table tbody tr{
+                border-top: solid 1px #cbda2a;
+            }
+
+            #leaderBoard table tbody tr:last-of-type{
+                border-bottom: solid 1px #cbda2a;
+            }
+
+   

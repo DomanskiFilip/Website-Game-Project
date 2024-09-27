@@ -1,27 +1,13 @@
 // INITIAL DECLARATIONS SECTION
-// Attributes of the player
-var player = {
-    x: 650,
-    y: 200,
-    x_v: 0,
-    y_v: 0,
-    jump : true,
-    height: 20,
-    width: 20
-};
-
-var keys = {
+// declare movment keys
+let keys = {
     right: false,
     left: false,
     up: false,
     };
 
-// Define player starting position
-const playerStartX = player.x;
-const playerStartY = player.y;
-
 // gravity 
-var gravity = 0.6;
+let gravity = 0.6;
 
 // canvas
 document.getElementById("canvas");
@@ -30,12 +16,27 @@ ctx.canvas.height = window.innerHeight - document.getElementsByTagName("nav")[0]
 ctx.canvas.width = window.innerWidth;
 
 //canvas size initially set to screen resolution - the nav bar height
-var navHeight = document.getElementsByTagName("nav")[0].clientHeight;
-var canvasHeight = window.innerHeight - navHeight;
-var canvasWidth = window.innerWidth;
+let navHeight = document.getElementsByTagName("nav")[0].clientHeight;
+let canvasHeight = window.innerHeight - navHeight;
+let canvasWidth = window.innerWidth;
+
+// Calculate the center of the canvas
+const centerX = canvasWidth / 2;
+const centerY = canvasHeight / 2;
+
+// Attributes of the player
+let player = {
+    x: 0,
+    y: 0,
+    x_v: 0,
+    y_v: 0,
+    jump : true,
+    height: 20,
+    width: 20
+};
 
 // platforms
-var platforms = [];
+let platforms = [];
 
 // Define constants for platform color and dimensions
 const PLATFORM_COLOR = 'green';
@@ -58,20 +59,28 @@ const predefinedPlatforms = [
 // Calculate the total width of the platforms group
 const minX = Math.min(...predefinedPlatforms.map(p => p.x));
 const maxX = Math.max(...predefinedPlatforms.map(p => p.x)) + PLATFORM_WIDTH;
-const totalWidth = maxX - minX;
+const totalPlatformGroupWidth = maxX - minX;
 
 // Calculate the total height of the platforms group
 const minY = Math.min(...predefinedPlatforms.map(p => p.y));
 const maxY = Math.max(...predefinedPlatforms.map(p => p.y)) + PLATFORM_HEIGHT;
-const totalHeight = maxY - minY;
+const totalPlatformGroupHeight = maxY - minY;
 
-// Calculate the center of the canvas
-const centerX = canvasWidth / 2;
-const centerY = canvasHeight / 2;
+// Calculate the center of the platforms group
+const platformsCenterX = minX + totalPlatformGroupWidth / 2;
+const platformsCenterY = minY + totalPlatformGroupHeight / 2;
+
+// Recenter the player based on the platforms group center and canvas center
+player.x = centerX - (platformsCenterX - minX -95); // -95 is to adjust the player position
+player.y = centerY - (platformsCenterY - minY);
+
+// Define player starting position
+const playerStartX = player.x;
+const playerStartY = player.y;
 
 // Calculate the starting x, y positions for the first platform to center the group
-const offsetX = centerX - (totalWidth / 2);
-const offsetY = centerY - (totalHeight / 2);
+const offsetX = centerX - (totalPlatformGroupWidth / 2);
+const offsetY = centerY - (totalPlatformGroupHeight / 2);
 
 // Function to create platforms with predefined positions
 function createplat() {
@@ -89,7 +98,7 @@ function createplat() {
 
 
 // coins
-var coins = [];
+let coins = [];
 
 // Define constants for coin color and dimensions
 const COIN_COLOR = 'yellow';
@@ -122,7 +131,7 @@ function createcoins() {
     }
 }
 
-var coinCounter = 0;
+let coinCounter = 0;
 
 //RENDER SECTION
 
@@ -160,7 +169,7 @@ function renderCoinCounter() {
     ctx.font = "1000px Arial";
     const text = coinCounter.toString();
     const textWidth = ctx.measureText(text).width; 
-    ctx.fillText(text, (canvasWidth / 2) - (textWidth / 2), 800); // Centered horizontally and vertically
+    ctx.fillText(text, (canvasWidth / 2) - (textWidth / 2), 800); // Centered vertically
 }
 
 
@@ -204,20 +213,31 @@ let score = 0; // Variable to store the player's score
 let gameEnded = false; // Flag to check if the game has ended
 
 function renderVictoryMessage() {
-    ctx.globalAlpha = 1.0; // Ensure full opacity
+    ctx.globalAlpha = 1.0;
     ctx.fillStyle = "#FFFFFF";
     ctx.font = "40px Arial";
     ctx.fillText("Victory!", canvas.width / 2 - 80, canvas.height / 2 - 20);
     ctx.font = "20px Arial";
+
+    // Calculate the score based on the number of coins collected and the elapsed time
     score = Math.floor(((coinCounter / elapsedTime) * 1000000));
-    ctx.fillText("your score: " + score, canvas.width / 2 - 70, canvas.height / 2 + 20);
-    return score;
+
+    ctx.fillText("your score: " + score, canvas.width / 2 - 100, canvas.height / 2 + 20);
+    let storedUser = JSON.parse(localStorage.getItem(username.value)); // Retrieve the user object from local storage
+    // Update the user's top score if the current score is higher
+    if(score > storedUser.topScore){
+        storedUser.topScore = score;
+        localStorage.setItem(storedUser.name, JSON.stringify(storedUser));
+        ctx.fillText("New high score!", canvas.width / 2 - 90, canvas.height / 2 + 60);
+        console.log("New high score set:", storedUser.topScore);
+    }
 }
 
 function startGame() {
     console.log("Game started");
     startTime = Date.now();
     gameEnded = false;
+    loop();
 }
 
 function loop() {
@@ -291,7 +311,7 @@ function loop() {
         }
     }
 
-    // Check if all coins are collected
+    // Check if all coins are collected if yes game ends
     if (coins.length === 0) {
         gameEnded = true;
     }
@@ -317,42 +337,43 @@ function loop() {
     console.log("Start button clicked");   
 
     // username and password requirements
-    loginError = document.getElementById("loginError");
-    if (document.getElementById("username").value === "") {
+    let loginError = document.getElementById("loginError");
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+    if (username === "") {
         loginError.innerHTML = "Please enter your username";
         return;
-    }
-
-    if (document.getElementById("password").value === "") {
-        loginError.innerHTML = "Please enter your password";
+    }else if (localStorage.getItem(username) === null) {
+        loginError.innerHTML = "Username not found";
         return;
+    }else {
+        storedUser = JSON.parse(localStorage.getItem(username));
+        if (password === "") {
+            loginError.innerHTML = "Please enter your password";
+            return;
+        } else if (storedUser.password !== password) {
+            loginError.innerHTML = "Incorrect password";
+            return;
+        } else {
+            // hide login and show game canvas
+            document.getElementById("login").style.display = "none";
+            const canvasElement = document.getElementById("canvas");
+            if (canvasElement) {
+                canvasElement.style.display = "block";
+                console.log("Canvas displayed");
+            } else {
+                console.error("Canvas element not found");
+            }
+            // initialize game
+            createplat();
+            createcoins();
+            // start game
+            startGame();
+        }
     }
-
-
-
-    //hide login and show game canvas
-    document.getElementById("login").style.display = "none";
-    const canvasElement = document.getElementById("canvas");
-    if (canvasElement) {
-        canvasElement.style.display = "block";
-        console.log("Canvas displayed");
-    } else {
-        console.error("Canvas element not found");
-    }
-    //initialize game
-    createplat();
-    createcoins();
-    // start game
-    startGame();
-    loop();
- }
+}
 
  document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("startButton").addEventListener("click", startButton);
 });
-
- 
-
-
-// LEADERBOARD SECTION
 

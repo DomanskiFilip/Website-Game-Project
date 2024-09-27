@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>login</title>
-    <script src="login.js" defer></script>
+    <script src="register.js" defer></script>
 </head>
 <body>
     <nav>
         <ul>
             <li><a href="index.html">Game</a></li>
             <li><a href="leaderBoard.html">Leaderboard</a></li>
-            <li><a href="login.html">login</a></li>
+            <li><a href="register.html">Register</a></li>
         </ul>
     </nav>
     <main>
         <section id="register">
             <h1>Register</h1>
-            <form action="" id="loginForm">
+            <form id="loginForm">
                 <label for="username">Username</label>
                 <input type="text" name="username" id="username" required>
                 <label for="password">Password</label>
@@ -27,6 +27,7 @@
                 <input type="text" name="phone" id="phone" required>
                 <label for="birthDate">Birth Date</label>
                 <input type="date" name="birthDate" id="birthDate" required>
+                <span id="registerFeedback"></span>
                 <button type="submit" id="registerButton">Register</button>
             </form>
         </section>
