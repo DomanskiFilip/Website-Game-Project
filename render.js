@@ -1,14 +1,42 @@
 // RENDER MODULE
+// animations
+
+// Load images
+const PlayerStanding = new Image();
+PlayerStanding.src = 'img/standing.png';
+
+const playerRight = new Image();
+playerRight.src = 'img/right.png';
+
+const playerLeft = new Image();
+playerLeft.src = 'img/left.png';
+
+const playerJumpUp = new Image();
+playerJumpUp.src = 'img/jumpingUp.png';
+
+const CoinImg = new Image();
+CoinImg.src = 'img/coin.png';
+
+const canvasImg = new Image();
+canvasImg.src = 'img/canvas.jpg';
+
+
 // Function to render the canvas
 function rendercanvas() {
-    ctx.fillStyle = "#2a44d7";
-    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    ctx.drawImage(canvasImg, 0, 0, canvasWidth, canvasHeight);
 }
 
 // Function to render the player
 function renderplayer() {
-    ctx.fillStyle = "#F08080";
-    ctx.fillRect(player.x, player.y, player.width, player.height);
+    if (keys.left) {
+        ctx.drawImage(playerLeft, player.x, player.y, player.width, player.height);
+    } else if (keys.right) {
+        ctx.drawImage(playerRight, player.x, player.y, player.width, player.height);
+    } else if (keys.up) {
+        ctx.drawImage(playerJumpUp, player.x, player.y, player.width, player.height);
+    } else {
+        ctx.drawImage(PlayerStanding, player.x, player.y, player.width, player.height);
+    }
 }
 
 // Function to render platforms
@@ -22,14 +50,13 @@ function renderplat() {
 // Function to render coins
 function rendercoins() {
     for (let i = 0; i < coins.length; i++) {
-        ctx.fillStyle = coins[i].color;
-        ctx.fillRect(coins[i].x, coins[i].y, coins[i].width, coins[i].height);
+        ctx.drawImage(CoinImg, coins[i].x, coins[i].y, coins[i].width, coins[i].height);
     }
 }
 
 // Function to render the coin counter
 function renderCoinCounter() {
-    ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+    ctx.fillStyle = "rgba(70, 66, 66, 0.3)";
     ctx.font = "1000px Arial";
     const text = coinCounter.toString();
     const textWidth = ctx.measureText(text).width; 

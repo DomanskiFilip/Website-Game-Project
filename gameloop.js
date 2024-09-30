@@ -8,9 +8,17 @@ let gameEnded = false;
 // Display a victory message with the player's score
 function renderVictoryMessage() {
     ctx.globalAlpha = 1.0;
-    ctx.fillStyle = "#FFFFFF";
     ctx.font = "40px Arial";
+ 
+     // Draw the shadow
+     ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+     ctx.fillRect(canvas.width / 2 - 200, canvas.height / 2 - 100, 400, 240);
+
+    // Display the victory message
+    ctx.fillStyle = "rgb(255, 0, 0)";
     ctx.fillText("Victory!", canvas.width / 2 - 80, canvas.height / 2 - 20);
+
+    // reset font
     ctx.font = "20px Arial";
 
     // Calculate the score based on the number of coins collected and the elapsed time
@@ -49,6 +57,11 @@ function loop() {
     if (player.y + player.height < canvasHeight) {
         player.y_v += gravity;
         player.jump = true;
+        
+        // Cap the maximum y_v at 15
+        if (player.y_v > 15) {
+            player.y_v = 15;
+        }
     }
 
     // Handle horizontal movement

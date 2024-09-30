@@ -6,8 +6,9 @@ let player = {
     x_v: 0,
     y_v: 0,
     jump : true,
-    height: 20,
-    width: 20
+    height: 50,
+    width: 50,
+    color: "#F08080"
 };
 
 // class for platforms
@@ -17,7 +18,7 @@ class Platform {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.color = "#138b1f";
+        this.color = "#895608ff";
     }
 
     draw(ctx) {
@@ -31,16 +32,26 @@ let platforms = [];
 
 // Define platform positions
 const predefinedPlatforms = [
-    { x: 650, y: 200 },
-    { x: 600, y: 300 },
-    { x: 800, y: 400 },
-    { x: 850, y: 200 },
-    { x: 1000, y: 200 },
-    { x: 1200, y: 100 },
-    { x: 1300, y: 300 },
-    { x: 1100, y: 350 },
-    { x: 960, y: 380 },
+    { x: 600, y: 200 },
 ];
+
+// Function to generate random positions
+function getRandomPosition(minX, maxX, minY, maxY) {
+    return {
+        x: Math.floor(Math.random() * (maxX - minX + 1)) + minX,
+        y: Math.floor(Math.random() * (maxY - minY + 1)) + minY
+    };
+}
+
+// Generate random positions for the rest of the platforms
+const numberOfPlatforms = 8; // Total number of platforms excluding the first one
+const minPlatPosX = 500, maxPlatPosX = 1500; // Define the range for x coordinates
+const minPlatPosY = 100, maxPlatPosY = 500; // Define the range for y coordinates
+
+for (let i = 0; i < numberOfPlatforms; i++) {
+    predefinedPlatforms.push(getRandomPosition(minPlatPosX, maxPlatPosX, minPlatPosY, maxPlatPosY));
+}
+
 
 //class for coins
 class Coins {
@@ -60,18 +71,6 @@ class Coins {
 
 // array to store coins
 let coins = [];
-
-// Define coin positions
-const predefinedCoins = [
-    { x: 650, y: 280 },
-    { x: 850, y: 380 },
-    { x: 900, y: 180 },
-    { x: 1050, y: 180 },
-    { x: 1250, y: 80 },
-    { x: 1350, y: 280 },
-    { x: 1150, y: 330 },
-    { x: 1010, y: 360 },
-];
 
 // canvas and context (ctx) declarations
 let canvas = document.getElementById("canvas");
@@ -114,19 +113,31 @@ const playerStartY = player.y;
 const offsetX = centerX - (totalPlatformGroupWidth / 2);
 const offsetY = centerY - (totalPlatformGroupHeight / 2);
 
+// Minimum distance between platforms
+const MIN_PLATFORM_DISTANCE = 50;
+const MAX_PLATFORM_DISTANCE = 100;
+
 // Function to create platforms with predefined positions
 function createplat() {
-    console.log("Platforms created");
    for (let i = 0; i < predefinedPlatforms.length; i++) {
-        platforms.push(new Platform(predefinedPlatforms[i].x - minX + offsetX, predefinedPlatforms[i].y - minY + offsetY, 125, 15));
-    }
+        let newX = predefinedPlatforms[i].x - minX + offsetX;
+        let newY = predefinedPlatforms[i].y - minY + offsetY;
+        let tooClose = platforms.some(platform => {
+            let dx = platform.x - newX;
+            let dy = platform.y - newY;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            return distance < MIN_PLATFORM_DISTANCE || distance > MAX_PLATFORM_DISTANCE;
+        });
+        if (!tooClose) {
+            platforms.push(new Platform(newX, newY, 125, 15));
+        }
+        }
 }
 
 // Function to create coins with predefined positions
 function createcoins() {
-    console.log("Coins created");
-    for (let i = 0; i < predefinedCoins.length; i++) {
-        coins.push(new Coins(predefinedCoins[i].x - minX + offsetX, predefinedCoins[i].y - minY + offsetY, 10, 10));
+    for (let i = 0; i < predefinedPlatforms.length; i++) {
+        coins.push(new Coins(predefinedPlatforms[i].x - minX + offsetX + 62.5, predefinedPlatforms[i].y - minY + offsetY - 30, 20, 15));
     }
 }
 

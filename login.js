@@ -2,7 +2,6 @@
  // login button starting the game
  function startButton(event) {
     event.preventDefault(); // preventing form element to cause unexpected behaviour by preventing event default behaviour
-    console.log("Start button clicked");   
 
     // username and password requirements
     let loginError = document.getElementById("loginError");
@@ -28,7 +27,6 @@
             const canvasElement = document.getElementById("canvas");
             if (canvasElement) {
                 canvasElement.style.display = "block";
-                console.log("Canvas displayed");
             } else {
                 console.error("Canvas element not found");
             }
