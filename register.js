@@ -47,7 +47,7 @@ function registerButton(event) {
     let threeYearsAgo = new Date();
     threeYearsAgo.setFullYear(currentDate.getFullYear() - 3);
     if (birthDateObj > threeYearsAgo) {
-        registerFeedback.innerHTML = "Birth date must be at least 3 years in the past";
+        registerFeedback.innerHTML = "you must be at least 3 to register!";
         return;
     }
     if (localStorage.getItem(document.getElementById("username").value) !== null) {
