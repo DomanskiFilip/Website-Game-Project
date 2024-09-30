@@ -28,6 +28,14 @@ function registerButton(event) {
         registerFeedback.innerHTML = "Please enter your password";
         return;
     }
+    if (document.getElementById("password").value.length < 8) {
+        registerFeedback.innerHTML = "Password must be at least 8 characters long";
+        return;
+    }
+    if (!/[a-z]/.test(document.getElementById("password").value) || !/[A-Z]/.test(document.getElementById("password").value) || !/[0-9]/.test(document.getElementById("password").value)) { //password validation using regex
+        registerFeedback.innerHTML = "Password must contain at least one number, one letter and one uppercase letter";
+        return;
+    }
     if (document.getElementById("phone").value === "") {
         registerFeedback.innerHTML = "Please enter your phone number";
         return;
