@@ -20,7 +20,7 @@ class Platform {
         this.height = height;
         this.color = "#895608ff";
     }
-
+    // function to create platform
     draw(ctx) {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y,this.width, this.height);
@@ -62,7 +62,7 @@ class Coins {
         this.height = height;
         this.color = "#ced11c";
     }
-
+    // function to create coin
     draw(ctx) {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y,this.width, this.height);
