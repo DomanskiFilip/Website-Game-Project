@@ -60,6 +60,36 @@ function renderCoinCounter() {
     ctx.font = "1000px Arial";
     const text = coinCounter.toString();
     const textWidth = ctx.measureText(text).width; 
-    ctx.fillText(text, (canvasWidth / 2) - (textWidth / 2), 800); // Centered vertically
+    ctx.fillText(text, (canvasWidth / 2) - (textWidth / 2), 750); // Centered vertically
+}
+
+// Display a victory message with the player's score
+function renderVictoryMessage() {
+    ctx.globalAlpha = 1.0;
+    ctx.font = "40px Arial";
+ 
+     // Draw the shadow
+     ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+     ctx.fillRect(canvas.width / 2 - 200, canvas.height / 2 - 100, 400, 240);
+
+    // Display the victory message
+    ctx.fillStyle = "rgb(255, 0, 0)";
+    ctx.fillText("Victory!", canvas.width / 2 - 80, canvas.height / 2 - 20);
+
+    // reset font
+    ctx.font = "20px Arial";
+
+    // Calculate the score based on the number of coins collected and the elapsed time
+    score = Math.floor(((coinCounter / elapsedTime) * 1000000));
+
+    ctx.fillText("your score: " + score, canvas.width / 2 - 100, canvas.height / 2 + 20);
+    let storedUser = JSON.parse(localStorage.getItem(username.value)); // Retrieve the user object from local storage
+    // Update the user's top score if the current score is higher
+    if(score > storedUser.topScore){
+        storedUser.topScore = score;
+        localStorage.setItem(storedUser.name, JSON.stringify(storedUser));
+        ctx.fillText("New high score!", canvas.width / 2 - 90, canvas.height / 2 + 60);
+        console.log("New high score set:", storedUser.topScore);
+    }
 }
 
