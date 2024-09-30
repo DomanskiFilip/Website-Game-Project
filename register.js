@@ -32,8 +32,22 @@ function registerButton(event) {
         registerFeedback.innerHTML = "Please enter your phone number";
         return;
     }
-    if (document.getElementById("birthDate").value === "") {
-        registerFeedback.innerHTML = "Please enter your brith date";
+    if (!/^\d{10}$/.test(document.getElementById("phone").value)) { // phone number validation useing regex
+        registerFeedback.innerHTML = "Please enter a valid phone number in correct format";
+        return;
+    }
+    // birth date validation the date must be at least 3 years in the past
+    let birthDate = document.getElementById("birthDate").value;
+    if (birthDate === "") {
+        registerFeedback.innerHTML = "Please enter your birth date";
+        return;
+    }
+    let birthDateObj = new Date(birthDate);
+    let currentDate = new Date();
+    let threeYearsAgo = new Date();
+    threeYearsAgo.setFullYear(currentDate.getFullYear() - 3);
+    if (birthDateObj > threeYearsAgo) {
+        registerFeedback.innerHTML = "Birth date must be at least 3 years in the past";
         return;
     }
     if (localStorage.getItem(document.getElementById("username").value) !== null) {
