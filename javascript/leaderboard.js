@@ -1,3 +1,4 @@
+// array to hold users
 const allusers = [];
 // Get all users from local storage
 for (let i = 0; i < localStorage.length; i++) {

@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>leaderBoard</title>
-    <script src="leaderboard.js" defer></script>
+    <!--script modules / type=module causes CORS error -->
+    <script src="javascript/leaderboard.js" defer></script>
 </head>
 <body>
+    <!--navigation-->
     <nav>
         <ul>
             <li><a href="index.html">Game</a></li>
@@ -15,22 +17,31 @@
             <li><a href="register.html">Register</a></li>
         </ul>
     </nav>
-    <section>
-        <h1>Leader Board</h1>
-        <section id="leaderBoard">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Username</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
+    
+    <main>
+        <!--leaderboard section-->
+        <section>
+            <h1>Leader Board</h1>
+            <section id="leaderBoard">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Username</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--here will be generated leaderboard form leaderboard.js-->
+                    </tbody>
+                </table>
+            </section>
         </section>
-    </section>
+    </main>
+    <!--footer-->
+    <footer>
+        <span>Steal All Cheese!</span>
+        <span>&copy; Filip Domański</span>
+    </footer>
 </body>
 </html>

@@ -7,10 +7,10 @@
     <title>Web Game by Filip Domanski</title>
     <!--script modules / type=module causes CORS error -->
     <script src="javascript/definitions&centering.js" defer></script>
-    <script src="javascript/render.js"></script>
-    <script src="javascript/movement.js"></script>
-    <script src="javascript/gameloop.js"></script>
-    <script src="javascript/login.js"></script>
+    <script src="javascript/render.js" defer></script>
+    <script src="javascript/movement.js" defer></script>
+    <script src="javascript/gameloop.js" defer></script>
+    <script src="javascript/login.js" defer></script>
 </head>
 <body>
     <!--navigation-->
@@ -21,6 +21,7 @@
             <li><a href="register.html">Register</a></li>
         </ul>
     </nav>
+    
     <main>
         <!--login section-->
        <section id="login">
@@ -37,6 +38,11 @@
         <!--game canvas-->
         <canvas id="canvas"></canvas>
     </main>
+    <!--footer-->
+    <footer>
+        <span>Steal All Cheese!</span>
+        <span>&copy; Filip Domański</span>
+    </footer>
 <body>
 </body>
 </html>
