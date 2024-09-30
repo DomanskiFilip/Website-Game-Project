@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Web Game by Filip Domanski</title>
-    <script src="game.js" defer></script>
+    <!--script modules / type=module causes CORS error -->
+    <script src="definitions&centering.js" defer></script>
+    <script src="render.js"></script>
+    <script src="movement.js"></script>
+    <script src="gameloop.js"></script>
+    <script src="login.js"></script>
 </head>
 <body>
     <!--navigation-->
