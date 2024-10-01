@@ -78,14 +78,14 @@ function renderVictoryMessage() {
 
     // Draw the text
     ctx.font = "20px Arial";
-    ctx.fillStyle = "rgb(255, 0, 0)";
+    ctx.fillStyle = "#2a44d7";
     ctx.fillText("your score: " + score, canvas.width / 2 - 100, canvas.height / 2 + 220);
     let storedUser = JSON.parse(localStorage.getItem(username.value)); // Retrieve the user object from local storage
     // Update the user's top score if the current score is higher
     if(score > storedUser.topScore){
         storedUser.topScore = score;
         localStorage.setItem(storedUser.name, JSON.stringify(storedUser));
-        ctx.fillText("New high score!", canvas.width / 2 - 90, canvas.height / 2 + 260); // display new high score message
+        ctx.fillText("New high score!", canvas.width / 2 - 90, canvas.height / 2 + 260); // display nnnew high score message
     }
 }
 
