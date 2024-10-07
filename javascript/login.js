@@ -1,7 +1,11 @@
  // LOGIN MODULE
+ import { createplat, createcoins } from './definitions&centering.js';
+ import { startGame } from './gameloop.js';
+ console.log("login.js loaded");
  // login button starting the game
  function startButton(event) {
     event.preventDefault(); // preventing form element to cause unexpected behaviour by preventing event default behaviour
+
 
     // username and password requirements
     let loginError = document.getElementById("loginError");
@@ -14,7 +18,7 @@
         loginError.innerHTML = "Username not found";
         return;
     }else {
-        storedUser = JSON.parse(localStorage.getItem(username));
+        let storedUser = JSON.parse(localStorage.getItem(username));
         if (password === "") {
             loginError.innerHTML = "Please enter your password";
             return;

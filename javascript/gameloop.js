@@ -1,23 +1,30 @@
 // GAME LOOP MODULE
-// Variable to store the player's score
-let score = 0; 
+import { rendercanvas, renderplat, rendercoins, renderplayer, renderCoinCounter, renderVictoryMessage } from './render.js';
+import { player, platforms, coins, ctx, canvasHeight, canvasWidth, playerStartX, playerStartY } from './definitions&centering.js';
+import { keys, gravity,  } from './movement.js';
 
 // Flag to check if the game has ended
 let gameEnded = false; 
 
+// coin counter to keep track of coins collected
+let coinCounter = 0;
+
+// Variable to store the elapsed time
+let elapsedTime = 0;
+
 // Function to start the game loop
 function startGame() {
-    startTime = Date.now();
+    let startTime = Date.now();
     gameEnded = false;
-    loop();
+    loop(startTime);
 }
 
 // Game loop function
-function loop() {
+function loop(startTime) {
     if (gameEnded) {
-        elapsedTime = ((Date.now() - startTime) / 1000); // Calculate elapsed time in seconds
+        elapsedTime = ((Date.now() - startTime) / 100000000); // Calculate elapsed time in seconds normally it schould be 1000 but on live server Data.now() outputs insane numbers so I had to divide it by 10000000
         renderVictoryMessage();
-        return; // Stop the game loop
+        return elapsedTime;
     }
 
     // Clear the canvas
@@ -34,7 +41,7 @@ function loop() {
         }
     }
 
-    // Handle horizontal movement
+    // Handle movement useing keys
     if (keys.left) {
         player.x_v = -2.5;
     } else if (keys.right) {
@@ -75,15 +82,16 @@ function loop() {
         }
     }
 
-    // Check for collisions with coins
+    // Collision detected, remove the coin and increment the counter
     for (let i = 0; i < coins.length; i++) {
         if (player.x < coins[i].x + coins[i].width &&
             player.x + player.width > coins[i].x &&
             player.y < coins[i].y + coins[i].height &&
             player.y + player.height > coins[i].y) {
-            // Collision detected, remove the coin and increment the counter
-            coins.splice(i, 1);
             coinCounter++;
+           
+            coins.splice(i, 1);
+            
             break; // Exit the loop to avoid skipping coins
         }
     }
@@ -102,3 +110,5 @@ function loop() {
 
     requestAnimationFrame(loop);
 }
+
+export { startGame, gameEnded, coinCounter, elapsedTime };

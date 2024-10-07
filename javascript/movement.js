@@ -1,4 +1,5 @@
 // MOVEMENT MODULE
+import { player  } from './definitions&centering.js';
 // declare movment keys
 let keys = {
     right: false,
@@ -20,8 +21,6 @@ function keydown(e) {
     }
     if (e.keyCode == 39) {
         keys.right = true;
-
-        ctx.drawImage(playerLeft, player.x, player.y, player.width, player.height);
     }
     if (e.keyCode == 38) {
         keys.up = true;
@@ -45,3 +44,5 @@ function keyup(e) {
     }
 }
 
+
+export { keys, gravity, keydown, keyup };

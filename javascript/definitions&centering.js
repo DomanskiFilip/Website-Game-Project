@@ -118,6 +118,4 @@ function createcoins() {
     }
 }
 
-// coin counter to keep track of coins collected
-let coinCounter = 0;
-
+export { player, platforms, coins, createcoins, createplat, ctx, canvasHeight, canvasWidth, playerStartX, playerStartY };

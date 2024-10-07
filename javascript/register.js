@@ -15,7 +15,6 @@ function register() {
     localStorage.setItem(user.name, JSON.stringify(user));
 }
 
-
 function registerButton(event) {
     event.preventDefault(); // preventing form element to cause unexpected behaviour by preventing event default behaviour
     let registerFeedback = document.getElementById("registerFeedback");
@@ -32,6 +31,7 @@ function registerButton(event) {
         registerFeedback.innerHTML = "Password must be at least 8 characters long";
         return;
     }
+    //password validation using regex
     if (!/[a-z]/.test(document.getElementById("password").value) || !/[A-Z]/.test(document.getElementById("password").value) || !/[0-9]/.test(document.getElementById("password").value)) { //password validation using regex
         registerFeedback.innerHTML = "Password must contain at least one number, one letter and one uppercase letter";
         return;
@@ -40,7 +40,8 @@ function registerButton(event) {
         registerFeedback.innerHTML = "Please enter your phone number";
         return;
     }
-    if (!/^\d{10}$/.test(document.getElementById("phone").value)) { // phone number validation useing regex
+    // phone number validation useing regex
+    if (!/^\d{10}$/.test(document.getElementById("phone").value)) { 
         registerFeedback.innerHTML = "Please enter a valid phone number in correct format";
         return;
     }
@@ -73,3 +74,4 @@ function registerButton(event) {
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("registerButton").addEventListener("click", registerButton);
 });
+

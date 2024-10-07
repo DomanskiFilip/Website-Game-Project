@@ -4,13 +4,20 @@ const allusers = [];
 for (let i = 0; i < localStorage.length; i++) {
     allusers.push(localStorage.key(i));
   }
-// map all users and return an object with name and score
+// map all users and return an object with name and score useing try and catch to fillter any errors arisen from invalid JSON data
 const users = allusers.map((user) => {
-return {
-    name: user,
-    score: JSON.parse(localStorage.getItem(user)).topScore
+    try {  // Try to parse the user data
+        const userData = JSON.parse(localStorage.getItem(user));
+        return {
+            name: user,
+            score: userData.topScore
+        };
+    } catch (e) { // Catch any errors
+        console.error(`Error parsing data for user ${user}:`, e);
+        return null; // Return null for invalid entries
     }
-});
+}).filter(user => user !== null); // Filter out invalid entries
+
 
 // Sort users by score
 users.sort((a, b) => b.score - a.score);
