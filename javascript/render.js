@@ -80,7 +80,7 @@ function renderVictoryMessage() {
     ctx.globalAlpha = 1.0;
 
     // Calculate the score based on the number of coins collected and the elapsed time
-    score = Math.floor(((coinCounter / elapsedTime) * 100000));
+    score = Math.floor(((coinCounter / elapsedTime) * 1000000));
     
     // Draw the text
     ctx.font = "20px Arial";

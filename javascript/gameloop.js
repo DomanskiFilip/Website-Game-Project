@@ -12,17 +12,19 @@ let coinCounter = 0;
 // Variable to store the elapsed time
 let elapsedTime = 0;
 
+// Variable to store the start time
+let startTime = Date.now();
+
 // Function to start the game loop
 function startGame() {
-    let startTime = Date.now();
     gameEnded = false;
-    loop(startTime);
+    loop();
 }
 
 // Game loop function
-function loop(startTime) {
+function loop() {
     if (gameEnded) {
-        elapsedTime = ((Date.now() - startTime) / 100000000); // Calculate elapsed time in seconds normally it schould be 1000 but on live server Data.now() outputs insane numbers so I had to divide it by 10000000
+        elapsedTime = ((Date.now() - startTime) / 1000); // Calculate elapsed time in seconds
         renderVictoryMessage();
         return elapsedTime;
     }
