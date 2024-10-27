@@ -1,6 +1,6 @@
 # Website Game Project
 
-this is a platforming game with leaderboard and user registration and login 
+this is a platforming game with leaderboard, user registration and login 
 
 the game was a university project coded in pure HTML CSS Javascript as required
 
