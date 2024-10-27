@@ -1,4 +1,4 @@
-Website Game Project
+# Website Game Project
 
 this is a platforming game with leaderboard and user registration and login 
 
