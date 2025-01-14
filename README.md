@@ -9,3 +9,7 @@ the game uses localstorage as a "database", that means all passwords and account
 you can try out the website at: https://adappstudio.co.uk/Filip/webgame/
 
 hf
+
+![image](https://github.com/user-attachments/assets/bb3551ed-624a-4378-9d8f-6a4d68fe34da)
+
+![image](https://github.com/user-attachments/assets/28e67eec-7262-46d9-bdd7-5260a8950911)
