@@ -1,5 +1,7 @@
 # Website Game Project
 
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
 this is a platforming game with leaderboard, user registration and login 
 
 the game was a university project coded in pure HTML CSS Javascript as required
